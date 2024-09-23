@@ -1,31 +1,68 @@
 .App {
-  text-align: center;
+  background-color: #232428;
+  overflow: hidden;
+  height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Terminal {
+  background-color: #1b1b1b;
+  color: white;
+  height: 60vh;
+  width: 60vw;
+  padding: 1rem;
+  margin-left: 18vw;
+  font-weight: 200;
+  font-size: calc(10px + 1vmin);
+  font-family: 'Courier New', Courier, monospace;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.1rem;
+  border: solid 0.1rem #484747;
 }
 
+Output {
+  font-weight: 200;
+  font-size: calc(10px + 1vmin);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+Input {
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: white;
+  font-weight: 200;
+  font-size: calc(10px + 1vmin);
+  font-family: 'Courier New', Courier, monospace;
+  width: 55vw;
+}
+
+
+
+.App-header {
+  background-color: #232428;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  font-weight: 500;
+  color: white;
+}
+
+/*
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +73,4 @@
     transform: rotate(360deg);
   }
 }
+*/
