@@ -3,9 +3,10 @@ import './App.css';
 import { useState , useEffect, useRef} from 'react';
 
 function Terminal() {
-    const [input, setInput] = useState<string>('');
-    const [output, setOutput] = useState<string[]>([]);
-    const inputRef = useRef<HTMLInputElement>(null);
+  const [input, setInput] = useState<string>("");
+  const [output, setOutput] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [pathPrefix, setPathPrefix] = useState<string>("> ");
 
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -23,7 +24,7 @@ function Terminal() {
       prevOutput = [];
     }
 
-    setOutput([...prevOutput, `> ${command}`]);
+    setOutput([...prevOutput, pathPrefix + command]);
   }
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function Terminal() {
         ))}
       </div>
       <div className = "Input">
-        <span>{'> '}</span>
+        <span> {pathPrefix} </span>
         <input
           ref = {inputRef}
           value = {input}
