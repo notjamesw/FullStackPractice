@@ -18,12 +18,14 @@
   overflow-x: hidden;
   border-radius: 0.1rem;
   border: solid 0.1rem #484747;
+  line-height: 1.4
 }
 
-Output {
+Output { 
   font-weight: 200;
   font-size: calc(10px + 1vmin);
   font-family: 'Courier New', Courier, monospace;
+  line-height: 1.4
 }
 
 Input {
@@ -37,6 +39,7 @@ Input {
   font-size: calc(10px + 1vmin);
   font-family: 'Courier New', Courier, monospace;
   width: 55vw;
+  line-height: 1.4
 }
 
 

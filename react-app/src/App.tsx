@@ -15,6 +15,7 @@ function Terminal() {
     }
   }
 
+  // this allows the app to show previous input/outputs
   const processCommand = (command: string) => {
     let prevOutput: string[];
 
@@ -24,7 +25,7 @@ function Terminal() {
       prevOutput = [];
     }
 
-    setOutput([...prevOutput, pathPrefix + command]);
+    setOutput([...prevOutput, pathPrefix + command, command + "operation"]);
   }
 
   useEffect(() => {
