@@ -17,8 +17,8 @@ def run_interpreter():
 
     output = interpreter(user_input)
 
-    # Caching the input and output as a tuple
-    cache.append({'input': user_input, 'output': output})
+    # Caching the input
+    cache.append({'input': user_input})
     prev_command_index = len(cache)-1
 
     return jsonify({'output': output})

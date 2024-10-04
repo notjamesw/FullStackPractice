@@ -16,6 +16,17 @@ async function runInterpreter(input: string): Promise<string> {
   return output;
 };
 
+async function getPrevCommmand(): Promise<string> {
+  let prevCommand: string = "";
+  try {
+    const response = await axios.get('http://127.0.0.1:5000/get_prev_command');
+    prevCommand = response.data;
+  } catch (err) {
+    console.error("Error finding prev command:", err)
+  }
+  return prevCommand;
+}
+
 function Terminal() {
   const [input, setInput] = useState<string>("");
   const [output, setOutput] = useState<string[]>([]);
@@ -23,12 +34,13 @@ function Terminal() {
   const [pathPrefix, setPathPrefix] = useState<string>("> ");
   let isProgramActive: boolean = false;
 
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInput = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
         processCommand(input);
         setInput("");
-    } else if (e.key === "ArrowUp") { // endpoint
-        processCommand(input);
+    } else if (e.key === "ArrowUp") { 
+        const prevCommand = await getPrevCommmand();
+        setInput(prevCommand);
     }
   }
 
