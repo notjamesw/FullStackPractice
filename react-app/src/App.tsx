@@ -19,8 +19,8 @@ async function runInterpreter(input: string): Promise<string> {
 async function getPrevCommmand(): Promise<string> {
   let prevCommand: string = "";
   try {
-    const response = await axios.get('http://127.0.0.1:5000/get_prev_command');
-    prevCommand = response.data;
+    const response = await axios.get('http://127.0.0.1:5000/get_prev');
+    prevCommand = response.data.output;
   } catch (err) {
     console.error("Error finding prev command:", err)
   }
@@ -32,15 +32,17 @@ function Terminal() {
   const [output, setOutput] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [pathPrefix, setPathPrefix] = useState<string>("> ");
-  let isProgramActive: boolean = false;
+  const [isProgramActive, setProgramState] = useState<boolean>(false);
 
   const handleInput = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
         processCommand(input);
         setInput("");
     } else if (e.key === "ArrowUp") { 
-        const prevCommand = await getPrevCommmand();
-        setInput(prevCommand);
+        if (isProgramActive) {
+          const prevCommand = await getPrevCommmand();
+          setInput(prevCommand);
+        }
     }
   }
 
@@ -59,28 +61,38 @@ function Terminal() {
       // command to quit the interpreter if it is running
       if (command.toLowerCase() === "quit") {
         setPathPrefix("> ");
-        isProgramActive = false;
+        setProgramState(false);
         return;
       }
     } else { 
       // command to start the interpreter if it is not running    
       if (command.toLowerCase() === "lisp" || command.toLowerCase() === "racket") {
-        isProgramActive = true;
+        setProgramState(true);
         setPathPrefix("Racket> "); 
+        setOutput([...prevOutput]);
         return;
       }
     }
+    //console.log("DEBUG");
     
     if (command.toLowerCase() === "clear") {
-      setOutput([]);
+      try {
+        await axios.delete('http://127.0.0.1:5000/clear_all');
+        setOutput([]);
+      } catch (err) {
+        console.log("Error clearing cache:", err);
+      }
       return;
     } else {
       // run interpreter
-      let programOutput: string = pathPrefix + command; 
+      const echo: string = pathPrefix + command; 
       if (isProgramActive) {
-        programOutput = await runInterpreter(command);
+        console.log("test");
+        const programOutput = await runInterpreter(command);
+        setOutput([...prevOutput, echo, programOutput]);
+      } else {
+        setOutput([...prevOutput, echo]);
       }
-      setOutput([...prevOutput, pathPrefix + command, programOutput]);
     }
   }
 
@@ -96,8 +108,9 @@ function Terminal() {
         ))}
       </div>
       <div className = "Input">
-        <span> {pathPrefix} </span>
+        <span id = "input_prefix">{pathPrefix}</span>
         <input
+          id = "terminal_input"
           ref = {inputRef}
           value = {input}
           onChange={e=>setInput(e.target.value)}
