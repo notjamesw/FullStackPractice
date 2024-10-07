@@ -39,10 +39,14 @@ Input {
   font-size: calc(10px + 1vmin);
   font-family: 'Courier New', Courier, monospace;
   width: 55vw;
-  line-height: 1.4
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
-
+#input_prefix {
+  /* Prevents text wrapping when prefix changes and is long */
+  white-space: nowrap;
+}
 
 .App-header {
   background-color: #232428;
