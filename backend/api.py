@@ -17,7 +17,7 @@ class InterpreterAPI:
         self.interpreter = interpreter()
 
     def run(self):
-        self.app.run(debug=True)
+        self.app.run(host="0.0.0.0", port=8080)
 
     def run_interpreter(self):
         data = request.json
