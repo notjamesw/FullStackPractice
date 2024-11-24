@@ -3,10 +3,13 @@ import './App.css';
 import { useState , useEffect, useRef} from 'react';
 import axios from 'axios';
 
+
+const API_URL = "http://127.0.0.1:5000";
+
 async function runInterpreter(input: string): Promise<string> {
   let output: string = "";
   try {
-    const response = await axios.post('http://127.0.0.1:5000/run_interpreter', {
+    const response = await axios.post(`${API_URL}/run_interpreter`, {
       input: input
     });
     output = response.data.output;
@@ -19,7 +22,7 @@ async function runInterpreter(input: string): Promise<string> {
 async function getPrevCommmand(): Promise<string> {
   let prevCommand: string = "";
   try {
-    const response = await axios.get('http://127.0.0.1:5000/get_prev');
+    const response = await axios.get(`${API_URL}/get_prev`);
     prevCommand = response.data.output;
   } catch (err) {
     console.error("Error finding prev command:", err)
@@ -77,7 +80,7 @@ function Terminal() {
     
     if (command.toLowerCase() === "clear") {
       try {
-        await axios.delete('http://127.0.0.1:5000/clear_all');
+        await axios.delete(`${API_URL}/clear_all`);
         setOutput([]);
       } catch (err) {
         console.log("Error clearing cache:", err);
